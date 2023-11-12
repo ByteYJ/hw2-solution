@@ -25,6 +25,15 @@ public class ExpenseTrackerModel {
     transactions.remove(t);
   }
 
+  public void undoTransaction(int index) {
+    if (index < 0 || index >= transactions.size()) {
+      throw new IllegalArgumentException("Invalid transaction index.");
+    }
+    transactions.remove(index);
+  }
+
+
+
   public List<Transaction> getTransactions() {
     //encapsulation - data integrity
     return Collections.unmodifiableList(new ArrayList<>(transactions));

@@ -52,6 +52,16 @@ public class ExpenseTrackerController {
     return true;
   }
 
+  public void undoTransaction(int index) {
+    try {
+      model.undoTransaction(index);
+      refresh();
+    } catch (IllegalArgumentException e) {
+      JOptionPane.showMessageDialog(view, "Invalid transaction index for undo.");
+    }
+  }
+
+
   public void applyFilter() {
     //null check for filter
     if(filter!=null){
@@ -72,4 +82,6 @@ public class ExpenseTrackerController {
       view.toFront();}
 
   }
+
+
 }
