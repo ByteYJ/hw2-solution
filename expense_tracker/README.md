@@ -15,3 +15,9 @@ You should be able to view the GUI of the project upon successful compilation.
 
 ## Java Version
 This code is compiled with ```openjdk 17.0.7 2023-04-18```. Please update your JDK accordingly if you face any incompatibility issue.
+
+## New Feature
+Undo Functionality
+Indicators: Users can easily tell when undo is allowed/disallowed through clear visual indicators.
+Removing Transactions: Users can remove any transaction by selecting the respective row in the table.
+Updates: The removal of a transaction is instantly reflected in both the Transactions List and the Total Cost.
