@@ -247,7 +247,8 @@ public class TestExample {
 
     // New Test6 ： Undo allowed
     @Test
-    public void testUndoAllowed() {
+    public void testUndoAllowed() throws InvocationTargetException, InterruptedException {
+        SwingUtilities.invokeAndWait(() -> {
         // Pre-condition: Add a transaction
         controller.addTransaction(50.0, "food");
         // Verify that the initial row count is 2， with total line
@@ -266,5 +267,5 @@ public class TestExample {
 
         // Post-condition: Verify that the row count is 1 with total line kept
         assertEquals(1, view.getTableModel().getRowCount());
-    }
+        });}
 }
