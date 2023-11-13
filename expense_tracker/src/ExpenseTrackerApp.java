@@ -1,5 +1,6 @@
 import javax.swing.JOptionPane;
 import controller.ExpenseTrackerController;
+import controller.TestErrorHandler;
 import model.ExpenseTrackerModel;
 import view.ExpenseTrackerView;
 import model.Filter.AmountFilter;
@@ -15,8 +16,9 @@ public class ExpenseTrackerApp {
     // Create MVC components
     ExpenseTrackerModel model = new ExpenseTrackerModel();
     ExpenseTrackerView view = new ExpenseTrackerView();
-    ExpenseTrackerController controller = new ExpenseTrackerController(model, view);
-    
+    TestErrorHandler errorHandler= new TestErrorHandler();
+    ExpenseTrackerController controller = new ExpenseTrackerController(model, view, errorHandler);
+
 
     // Initialize view
     view.setVisible(true);
