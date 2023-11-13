@@ -10,6 +10,7 @@ import java.text.NumberFormat;
 
 import model.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseTrackerView extends JFrame {
@@ -158,24 +159,26 @@ public class ExpenseTrackerView extends JFrame {
       for(Transaction t : transactions) {
         totalCost+=t.getAmount();
       }
-  
+
       // Add rows from transactions list
       for(Transaction t : transactions) {
-        model.addRow(new Object[]{rowNum+=1,t.getAmount(), t.getCategory(), t.getTimestamp()}); 
+        model.addRow(new Object[]{rowNum+=1,t.getAmount(), t.getCategory(), t.getTimestamp()});
       }
       // Add total row
       Object[] totalRow = {"Total", null, null, totalCost};
       model.addRow(totalRow);
-  
+
       // Fire table update
       transactionsTable.updateUI();
-  
-    }  
+
+    }
   
 
   public JButton getAddTransactionBtn() {
     return addTransactionBtn;
   }
+
+  public JButton getUndoTransactionBtn() { return undoTransactionBtn; }
 
 
   public void highlightRows(List<Integer> rowIndexes) {
@@ -198,13 +201,32 @@ public class ExpenseTrackerView extends JFrame {
       transactionsTable.repaint();
   }
 
-  public void addUndoTransactionListener(ActionListener listener) {
-      undoTransactionBtn.addActionListener(listener);
-  }
+    public int[] getHighlightedRows() {
+        List<Integer> highlightedRows = new ArrayList<>();
+        for (int row = 0; row < transactionsTable.getRowCount(); row++) {
+            Component renderer = transactionsTable.prepareRenderer(transactionsTable.getCellRenderer(row, 0), row, 0);
+            if (renderer.getBackground().equals(new Color(173, 255, 168))) {
+                highlightedRows.add(row);
+            }
+        }
 
-  public int getSelectedTransactionIndex() {
-      return transactionsTable.getSelectedRow(); // Returns -1 if no row is selected
-  }
+        // Convert the list of highlighted rows to an array
+        int[] highlightedRowsArray = new int[highlightedRows.size()];
+        for (int i = 0; i < highlightedRows.size(); i++) {
+            highlightedRowsArray[i] = highlightedRows.get(i);
+        }
+
+        return highlightedRowsArray;
+    }
+
+    public void addUndoTransactionListener(ActionListener listener) {
+        undoTransactionBtn.addActionListener(listener);
+    }
+
+    public int getSelectedTransactionIndex() {
+        return transactionsTable.getSelectedRow();
+    }
+
 
 
 
