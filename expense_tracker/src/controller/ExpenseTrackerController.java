@@ -15,6 +15,8 @@ public class ExpenseTrackerController {
   
   private ExpenseTrackerModel model;
   private ExpenseTrackerView view;
+  private ErrorHandler errorHandler;
+
   /** 
    * The Controller is applying the Strategy design pattern.
    * This is the has-a relationship with the Strategy class 
@@ -22,9 +24,10 @@ public class ExpenseTrackerController {
    */
   private TransactionFilter filter;
 
-  public ExpenseTrackerController(ExpenseTrackerModel model, ExpenseTrackerView view) {
+  public ExpenseTrackerController(ExpenseTrackerModel model, ExpenseTrackerView view, ErrorHandler errorHandler) {
     this.model = model;
     this.view = view;
+    this.errorHandler = errorHandler;
   }
 
   public void setFilter(TransactionFilter filter) {
@@ -39,9 +42,15 @@ public class ExpenseTrackerController {
 
   public boolean addTransaction(double amount, String category) {
     if (!InputValidation.isValidAmount(amount)) {
+      if (errorHandler != null) {
+        errorHandler.reportError("Invalid amount entered.");
+      }
       return false;
     }
     if (!InputValidation.isValidCategory(category)) {
+      if (errorHandler != null) {
+        errorHandler.reportError("Invalid amount entered.");
+      }
       return false;
     }
     
@@ -57,7 +66,7 @@ public class ExpenseTrackerController {
       model.undoTransaction(index);
       refresh();
     } catch (IllegalArgumentException e) {
-      JOptionPane.showMessageDialog(view, "Invalid transaction index for undo.");
+      errorHandler.reportError("Invalid transaction index for undo.");
     }
   }
 
